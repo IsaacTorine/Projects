@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Bills Breakfast{% endblock %}
+
+{% block content %}
+<h1 class="display-4">&#127859; Bill's Breakfast</h1>
+
+<div class="row pt-4">
+    {% for item in items %}
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-5">
+        <div class="card mb-5 h-100" style="width: 18rem;">
+          <img class="card-img-top" src="{{ url_for('static', filename=item['image_path']) }}" alt="{{ item['item_name'] }}">
+          <div class="card-body">
+              <p><b>{{ item['item_name'] }}</b></p>
+              <p class="price">${{ item['cost'] }}</p>
+              <form action="{{ url_for('add_to_cart', item_id=item['id']) }}" method="POST">
+                <button type="submit" class="btn btn-primary ">
+                  Add to Cart
+                </button>
+              </form>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

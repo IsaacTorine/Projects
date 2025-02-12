@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Orders{% endblock %}
+
+{% block content %}
+<h1 class="display-4"><b>Orders</b></h1>
+
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url_for('render_index') }}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Orders</li>
+  </ol>
+</nav>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Order ID</th>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Item Name</th>
+      </tr>
+    </thead>
+    <tbody>  
+      {% for order in orders %}
+      <tr>
+          <td>
+            <a href="{{url_for('render_order', order_id = order['order_id'])}}" target = "blank" type="button" class="btn btn-primary">{{order['order_id']}}</a>
+          </td> 
+          
+          <td>{{order['customer_name']}}</td>
+          <td>{{order['item_ordered']}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endblock %}
+  

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+{% if item %}
+<h1 class="display-4">Edit Item: {{item['item_name'] }}</h1>
+{% set name = item['item_name'] %}
+{% set cost = item['cost'] %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('render_index') }}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('render_items') }}">Items</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Edit</li>
+    </ol>
+  </nav>
+{% else %}
+<h1 class="display-4">New Item</h1>
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('render_index') }}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('render_items') }}">Items</a></li>
+      <li class="breadcrumb-item active" aria-current="page">New</li>
+    </ol>
+  </nav>
+{% endif %}
+
+
+{% if item %}
+<form action="{{ url_for('render_edit_items', item_id = item['id']) }}" method="post" enctype="multipart/form-data">
+    
+{%else%}
+<form action="{{ url_for('render_add_items') }}" method="post" enctype="multipart/form-data">
+{% endif %}
+<div class="row mb-3">
+    
+    <div class="col-md-6">
+        <label for="item-name" class="form-label">Item Name:</label>
+        <input type="text" class="form-control" name="item-name" id="item-name" value="{{ name }}" placeholder="Name of Item">
+    </div>
+    
+    <div class="col-md-6">
+        <label for="cost" class="form-label">Cost:</label>
+        <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="number" class="form-control" name="cost" id="cost" value="{{ cost }}" placeholder="Cost" step="0.01" min="0">
+        </div>
+    </div>
+</div>
+ <div class="mt-4">
+     <button class="btn btn-primary" type="submit">Submit</button>
+     <button class="btn btn-secondary" type="reset">Reset</button>
+ </div>
+</form>
+
+
+
+
+{% endblock %} 
+

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if customer %}
+<h1 class="display-4">Edit Customer: {{customer['customer_name'] }}</h1>
+{% set name = customer['customer_name']  %}
+{% set email = customer['customer_email']  %}
+{% set phone = customer['customer_phone']  %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('render_index') }}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('render_customers') }}">Customers</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Edit</li>
+    </ol>
+  </nav>
+{% else %}
+<h1 class="display-4">Add a Customer</h1>
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('render_index') }}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('render_customers') }}">Customers</a></li>
+      <li class="breadcrumb-item active" aria-current="page">New</li>
+    </ol>
+  </nav>
+{% endif %}
+
+{% if customer %}
+<form action="{{ url_for('render_edit_customers', customer_id = customer['id']) }}" method="post" enctype="multipart/form-data">
+    
+{%else%}
+<form action="{{ url_for('render_add_customers') }}" method="post" enctype="multipart/form-data">
+{% endif %}
+<div class="mb-3">
+    <label for="customer-name" class="form-label">Customer Name:</label>
+    
+    <input type="text" class="form-control" name="customer-name" id="customer-name" value ="{{name}}" placeholder="Name of Customer">
+</div>
+<div class="mb-3">
+    <label for="customer-email" class="form-label">Customer Email:</label>
+  
+    <input type="text" class="form-control" name="customer-email" id="customer-email" value ="{{email}}" placeholder="Email of Customer">
+</div>
+<div class="mb-3">
+    <label for="customer-phone" class="form-label">Customer Phone Number:</label>
+
+    <input type="tel" class="form-control" name="customer-phone" id="customer-phone" value ="{{phone}}" placeholder="Customer Phone Number">
+</div>
+ <div class="mt-4">
+     <button class="btn btn-primary" type="submit">Submit</button>
+     <button class="btn btn-secondary" type="reset">Reset</button>
+ </div>
+</form>
+
+
+
+
+{% endblock %} 

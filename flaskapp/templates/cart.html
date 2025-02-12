@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Current Order{% endblock %}
+
+{% block content %}
+<h1 class="display-4"><b>Current Order</b></h1>
+
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url_for('render_index') }}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Current Order</li>
+  </ol>
+</nav>
+
+<div class="container">
+    {% if not cart %}
+    <h2>Cart is empty</h2>
+    <a href="{{ url_for('render_index') }}" class="btn btn-primary">
+      Back to add items
+    </a>
+  {% else %}
+
+  <div class="mb-4">
+    <h2>Complete the Order</h2>
+    <p>Choose a customer from the dropdown. Payment method and taxes are handled later when the order is picked up.</p>
+    <form action="{{ url_for('cart_checkout') }}" method="POST">
+      <div class="mb-3">
+        <label for="customers" class="form-label">Who is this order for?</label>
+        <select class="form-select" name="customers" id="customers">
+          {% for customer in customers %}
+          <option value="{{ customer['id'] }}">{{ customer['customer_name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">
+         Submit Order
+      </button>
+    </form>
+  </div>
+
+  <h2>Cart</h2>
+  <p>Subtotal does not include sales tax.</p>
+  <div class="card">
+    <div class="card-body">
+      {% for item in cart %}
+  
+      <div class="d-flex mb-4">
+        <img img src="{{ url_for('static', filename=item['image_path']) }}"  width="75" >
+        <div class="flex-grow-1">
+          <h6 class="mb-1">{{ item['item_name'] }}</h6>
+          <p class="mb-0">Price: ${{ (item['total_cost']) }}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="d-flex justify-content-between">
+        <h5>Subtotal</h5>
+        <h5>${{ cart | sum(attribute='total_cost') }}</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-end">
+    <form action="{{ url_for('clear_cart') }}" method="POST">
+      <button type="submit" class="btn btn-danger">
+        Cancel Order
+      </button>
+    </form>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
