@@ -1,0 +1,13 @@
+order_id,customer_name,item_ordered
+1,John Doe,chive cream cheese
+2,Jane Smith,cream cheese
+3,Michael Johnson,choclate donut
+4,Emily Brown,poppy seed bagel
+5,David Lee,glazed donut
+6,Sarah Wilson,seasame seed bagel
+3,Michael Johnson,choclate donut
+1,John Doe,glazed donut
+5,David Lee,cream cheese
+6,Sarah Wilson,poppy seed bagel
+7,Emily Brown, cheese
+4,Emily Brown, bagel
